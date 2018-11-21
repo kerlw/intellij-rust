@@ -17,6 +17,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.nio.file.Path
 import kotlin.concurrent.thread
+import kotlin.text.isBlank as isBlankKt
 
 val CI = System.getenv("CI") != null
 
@@ -123,7 +124,7 @@ allprojects {
     }
 }
 
-val channelSuffix = if (channel.isBlank()) "" else "-$channel"
+val channelSuffix = if (channel.isBlankKt()) "" else "-$channel"
 
 project(":") {
     val clionVersion = prop("clionVersion")

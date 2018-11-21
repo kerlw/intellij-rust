@@ -1,0 +1,8 @@
+test_dir = "./tests"
+pretty_printers_path = "./../prettyPrinters/"
+lldb_batchmode = "./lldb_batchmode.py"
+lldb_lookup = "lookup"
+print_lldb_stdout = true
+lldb_native_rust = false
+# Uncomment the following line to run on macOS:
+# lldb_python = "/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python"
