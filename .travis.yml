@@ -22,6 +22,12 @@ env:
     - RUST_VERSION=$CURRENT_RUST_VERSION ORG_GRADLE_PROJECT_platformVersion=183
     - RUST_VERSION=$OLD_RUST_VERSION ORG_GRADLE_PROJECT_platformVersion=183 ORG_GRADLE_PROJECT_ideaVersion=2018.3
 
+dist: xenial
+addons:
+  apt:
+    packages:
+      - lldb
+
 install: true
 
 before_script:
@@ -33,6 +39,7 @@ before_script:
   - ./check-license.sh
   - ./gradlew :resolveDependencies -Pkotlin.incremental=false --no-daemon
   - ./gradlew assemble testClasses -Pkotlin.incremental=false --no-daemon
+  - (cd ./pretty_printers_tests; cargo run)
 
 script:
   - travis_wait ./gradlew check -Pkotlin.incremental=false --no-daemon
