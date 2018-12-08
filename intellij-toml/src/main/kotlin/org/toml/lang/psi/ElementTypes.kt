@@ -9,6 +9,7 @@ import com.intellij.icons.AllIcons
 import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.tree.IElementType
+import com.intellij.psi.tree.TokenSet
 import org.toml.lang.TomlLanguage
 
 class TomlTokenType(debugName: String) : IElementType(debugName, TomlLanguage)
@@ -23,3 +24,5 @@ object TomlFileType : LanguageFileType(TomlLanguage) {
 
     override fun getCharset(file: VirtualFile, content: ByteArray) = "UTF-8"
 }
+
+val TOML_COMMENTS = TokenSet.create(TomlElementTypes.COMMENT)
