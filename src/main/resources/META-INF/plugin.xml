@@ -106,6 +106,10 @@
         <lang.findUsagesProvider language="Rust" implementationClass="org.rust.ide.search.RsFindUsagesProvider"/>
         <usageTypeProvider implementation="org.rust.ide.search.RsUsageTypeProvider"/>
 
+        <!-- Pattern Builder -->
+
+        <indexPatternBuilder implementation="org.rust.ide.search.RsIndexPatternBuilder"/>
+
         <!-- Smart Enter Processor -->
 
         <lang.smartEnterProcessor language="Rust"
