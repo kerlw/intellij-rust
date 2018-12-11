@@ -27,8 +27,20 @@ interface RsMod : RsQualifiedNamedElement, RsItemsOwner, RsVisible {
      */
     val modName: String?
 
+    /**
+     *  Returns value of `path` attribute related to this module.
+     *  If module doesn't have `path` attribute, returns null.
+     *
+     *  Note, in case of non inline module (i.e. declared via `mod foo;`)
+     *  `path` attribute belongs to module declaration but not to module item itself
+     */
+    val pathAttribute: String?
+
     val ownsDirectory: Boolean
 
+    /**
+     *  Returns directory where direct submodules should be located
+     */
     val ownedDirectory: PsiDirectory?
 
     val isCrateRoot: Boolean

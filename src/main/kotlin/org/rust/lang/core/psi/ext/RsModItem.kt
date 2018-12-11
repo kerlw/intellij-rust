@@ -36,6 +36,8 @@ abstract class RsModItemImplMixin : RsStubbedNamedElementImpl<RsModItemStub>,
 
     override val modName: String? get() = name
 
+    override val pathAttribute: String? get() = queryAttributes.lookupStringValueForKey("path")
+
     override val crateRelativePath: String? get() = RsPsiImplUtil.modCrateRelativePath(this)
 
     override val ownsDirectory: Boolean = true // Any inline nested mod owns a directory
@@ -61,6 +63,3 @@ abstract class RsModItemImplMixin : RsStubbedNamedElementImpl<RsModItemStub>,
 
 val RsModItem.hasMacroUse: Boolean get() =
     queryAttributes.hasAttribute("macro_use")
-
-val RsModItem.pathAttribute: String? get() =
-    queryAttributes.lookupStringValueForKey("path")

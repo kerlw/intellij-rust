@@ -25,6 +25,7 @@ import org.rust.lang.core.psi.ext.*
 import org.rust.lang.core.resolve.ref.RsReference
 import org.rust.lang.core.stubs.RsFileStub
 import org.rust.lang.core.stubs.index.RsModulesIndex
+import org.rust.openapiext.findFileByMaybeRelativePath
 
 class RsFile(
     fileViewProvider: FileViewProvider
@@ -58,13 +59,29 @@ class RsFile(
         return declaration?.name ?: if (name != RsConstants.MOD_RS_FILE) FileUtil.getNameWithoutExtension(name) else parent?.name
     }
 
+    override val pathAttribute: String?
+        get() = declaration?.pathAttribute
+
     override val crateRelativePath: String? get() = RsPsiImplUtil.modCrateRelativePath(this)
 
     override val ownsDirectory: Boolean
         get() = name == RsConstants.MOD_RS_FILE || isCrateRoot
 
-    override val ownedDirectory: PsiDirectory?
-        get() = originalFile.parent
+    override val ownedDirectory: PsiDirectory? get() {
+        if (name == RsConstants.MOD_RS_FILE || isCrateRoot) return originalFile.parent
+
+        val explicitPath = pathAttribute
+        val (parentDirectory, path) = if (explicitPath != null) {
+            originalFile.parent to explicitPath
+        } else {
+            `super`?.ownedDirectory to name
+        }
+
+        val directoryPath = FileUtil.getNameWithoutExtension(FileUtil.toSystemIndependentName(path))
+        val directory = parentDirectory?.virtualFile
+            ?.findFileByMaybeRelativePath(directoryPath) ?: return null
+        return parentDirectory.manager.findDirectory(directory)
+    }
 
     override val isCrateRoot: Boolean
         get() {
